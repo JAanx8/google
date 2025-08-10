@@ -1,167 +1,54 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Search Demo</title>
+  <meta charset="UTF-8">
+  <title>Search Page Demo</title>
   <style>
-    /* Simple centered layout */
     body {
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      margin: 0;
-      height: 100vh;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(180deg,#f6f8fb,#ffffff);
-      color: #202124;
-    }
-
-    .card {
-      width: 90%;
-      max-width: 640px;
-      padding: 36px;
-      border-radius: 12px;
-      box-shadow: 0 6px 22px rgba(32,33,36,0.08);
-      background: white;
-      text-align: center;
-    }
-
-    h1 { margin: 0 0 18px 0; font-size: 20px; letter-spacing: -0.2px; }
-    .search-row {
+      font-family: Arial, sans-serif;
       display: flex;
-      gap: 10px;
-      align-items: center;
-      margin-top: 12px;
-    }
-
-    input[type="search"] {
-      flex: 1;
-      padding: 12px 14px;
-      border-radius: 24px;
-      border: 1px solid #dadce0;
-      outline: none;
-      font-size: 16px;
-      transition: box-shadow .15s, border-color .15s;
-    }
-    input[type="search"]:focus {
-      box-shadow: 0 1px 6px rgba(66,133,244,0.2);
-      border-color: #8ab4f8;
-    }
-
-    button {
-      padding: 10px 16px;
-      border-radius: 8px;
-      border: none;
-      background: #1a73e8;
-      color: white;
-      cursor: pointer;
-      font-weight: 600;
-      box-shadow: 0 2px 6px rgba(26,115,232,0.18);
-    }
-    button.secondary {
-      background: #f1f3f4;
-      color: #202124;
-      box-shadow: none;
-    }
-
-    /* Modal */
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.45);
-      display: none;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      z-index: 1000;
+      height: 100vh;
+      background-color: #f8f9fa;
     }
-    .modal {
-      background: white;
-      padding: 22px;
-      border-radius: 10px;
-      width: 92%;
-      max-width: 420px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-      text-align: center;
+    h1 {
+      color: #202124;
+      font-size: 2em;
     }
-    .modal h2 { margin: 0 0 10px 0; }
-    .modal p { margin: 0 0 18px 0; color: #444; }
+    input {
+      width: 300px;
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 20px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #4285F4;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #3367d6;
+    }
   </style>
 </head>
 <body>
-  <div class="card" role="main" aria-labelledby="title">
-    <h1 id="title">Search Demo</h1>
-    <p>A safe demo page — press the button to see a friendly popup.</p>
-
-    <div class="search-row" style="margin-top:18px;">
-      <input id="query" type="search" placeholder="Type something (this is just a demo)"/>
-      <button id="searchBtn">Search</button>
-      <button id="surpriseBtn" class="secondary">Surprise</button>
-    </div>
-
-    <p style="font-size:13px; color:#666; margin-top:14px;">
-      This is not connected to any real search engine.
-    </p>
-  </div>
-
-  <!-- Modal -->
-  <div id="overlay" class="overlay" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="modal" role="document">
-      <h2>Demo popup</h2>
-      <p>This is a harmless demonstration. Nothing is hacked — promise! 😄</p>
-      <div style="display:flex; gap:10px; justify-content:center;">
-        <button id="closeBtn">Close</button>
-        <button id="learnBtn" class="secondary">Learn more</button>
-      </div>
-    </div>
-  </div>
+  <h1>Search Demo</h1>
+  <input type="text" placeholder="Type something...">
+  <button onclick="showPopup()">Search</button>
 
   <script>
-    const overlay = document.getElementById('overlay');
-    const searchBtn = document.getElementById('searchBtn');
-    const surpriseBtn = document.getElementById('surpriseBtn');
-    const closeBtn = document.getElementById('closeBtn');
-    const learnBtn = document.getElementById('learnBtn');
-    const query = document.getElementById('query');
-
-    function showModal(message) {
-      // Update modal text if you like (kept static for safety)
-      overlay.style.display = 'flex';
-      overlay.setAttribute('aria-hidden','false');
+    function showPopup() {
+      alert("This is a safe demonstration popup for your assignment!");
     }
-    function hideModal() {
-      overlay.style.display = 'none';
-      overlay.setAttribute('aria-hidden','true');
-    }
-
-    // Open popup on Search click (demo only)
-    searchBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      // you could read query.value here and act differently,
-      // but avoid doing anything that mimics other services.
-      showModal();
-    });
-
-    // Surprise button also opens the modal
-    surpriseBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      showModal();
-    });
-
-    closeBtn.addEventListener('click', hideModal);
-    learnBtn.addEventListener('click', () => {
-      // This button could navigate to a safe explanation page, or open another modal.
-      alert('This is a safe demo. Replace this with any safe link or info you like.');
-    });
-
-    // close modal on overlay click (outside modal content)
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) hideModal();
-    });
-
-    // keyboard support: Esc to close
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && overlay.style.display === 'flex') hideModal();
-    });
   </script>
 </body>
 </html>
